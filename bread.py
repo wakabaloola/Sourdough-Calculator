@@ -5,11 +5,11 @@ st.title('Sourdough Calculator')
 st.markdown("Specify the amount of flour (gr), yeast (gr), the corresponding yeast hydration (%), and the amount of salt (%) (relative to the amount of flour) in the fields below:")
 
 # Input fields
-flour = st.number_input(r'$F$: FLOUR (gr)', value=500, step=10)
-yeast = st.number_input(r'$Y$: YEAST (gr)', value=100, step=1)
-yeast_hydration = st.number_input(r'$H_Y$: YEAST HYDRATION (%)', value=100, min_value=1, step=1)
-salt_percentage = st.number_input(r'$S$: SALT (%)', value=2, min_value=0, step=1)
-hydration = st.number_input(r'$H$: DESIRABLE DOUGH HYDRATION (%)', value=80, min_value=40, max_value=120, step=1)
+flour = st.number_input(r'FLOUR (gr)', value=500, step=10)
+yeast = st.number_input(r'YEAST (gr)', value=100, step=1)
+yeast_hydration = st.number_input(r'YEAST HYDRATION (%)', value=100, min_value=1, step=1)
+salt_percentage = st.number_input(r'SALT (%)', value=2, min_value=0, step=1)
+hydration = st.number_input(r'DESIRABLE DOUGH HYDRATION (%)', value=80, min_value=40, max_value=120, step=1)
 
 def calculate_water(flour, hydration, yeast, yeast_hydration):
     """
@@ -57,7 +57,7 @@ The total yeast weight is usually the sum of flour, $F_Y$, and water, $W_Y$, con
 $$
 Y = F_Y + W_Y.
 $$
-Let us define **yeast hydration**, $H_Y$, as follows,
+Let us define **yeast hydration**, $H_Y$, and the related quantity $h_Y$, as follows,
 $$
 H_Y = \frac{W_Y}{F_Y}\times 100,\qquad{\rm and}\qquad h_Y = \frac{W_Y}{F_Y}.
 $$
@@ -97,7 +97,7 @@ st.markdown(" ")
 ########################################################################
 st.markdown("### Amount of Salt")
 
-st.markdown(r"""We determine the amount of salt required by specifying a percentage, $S$ (or $s = S/100$), of salt relative to the total amount of flour. The total amount of flour is given by:
+st.markdown(r"""We determine the amount of salt required by specifying a percentage, $S$, and the related quantity $s = S/100$, of salt relative to the total amount of flour. The total amount of flour is given by:
 $$
 F_{\rm total} = F + F_Y,
 $$
