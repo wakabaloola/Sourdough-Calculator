@@ -10,6 +10,7 @@ yeast = st.number_input(r'YEAST (gr)', value=100, step=1)
 yeast_hydration = st.number_input(r'YEAST HYDRATION (%)', value=100, min_value=1, step=1)
 salt_percentage = st.number_input(r'SALT (%)', value=2, min_value=0, step=1)
 hydration = st.number_input(r'DESIRABLE DOUGH HYDRATION (%)', value=80, min_value=40, max_value=120, step=1)
+evaporated_water = st.number_input(r"EVAPORATED WATER (%)", value=10, min_value=0, max_value=100, step=1)
 
 def calculate_water(flour, hydration, yeast, yeast_hydration):
     """
@@ -30,6 +31,12 @@ def calculate_salt(flour, yeast, yeast_hydration, salt_percentage):
     total_flour_weight = flour + yeast_flour
     return total_flour_weight * salt_percentage / 100
 
+def calculate_weight_after_evaporation(evaporated_water, flour, yeast, salt_needed, water_needed, hydration, yeast_hydration):
+    yeast_flour = yeast / (1 + yeast_hydration / 100)
+    yeast_water = yeast_hydration / 100 * yeast_flour
+    total_weight_before_evaporation = flour + yeast + salt_needed + water_needed
+    return total_weight_before_evaporation - evaporated_water / 100 * (yeast_water + water_needed)
+
 st.markdown("According to the equations displayed below, the amount of water and salt required are given, respectively, by:")
 
 water_needed = calculate_water(flour, hydration, yeast, yeast_hydration)
@@ -37,6 +44,9 @@ st.markdown(f"### Water: **{water_needed:.0f} g**")
 
 salt_needed = calculate_salt(flour, yeast, yeast_hydration, salt_percentage)
 st.markdown(f"### Salt: **{salt_needed:.0f} g**")
+
+total_weight = calculate_weight_after_evaporation(evaporated_water, flour, yeast, salt_needed, water_needed, hydration, yeast_hydration)
+st.markdown(f"### Resulting Loaf Weight: **{total_weight:.0f} g**")
 
 st.divider() 
 ######################################################################
@@ -111,6 +121,18 @@ $$
 \textrm{Salt} = \Big(F + \frac{Y}{1+h_Y}\Big)s
 }
 $$
+""")
+
+st.markdown(" ")
+#######################################################################
+st.markdown("### Resulting Loaf Weight")
+
+st.markdown(r"""We may estimate the resulting loaf weight, $L$, by adding the weights of all the ingredients and subtracting the amount of evaporated water, $e$ (\%). Denoting the yeast weight by, $Y$, the flour weight (excluding that in the yeast) by $F$, the amount of added water (again excluding that in the yeast) by $W$, the water present in the yeast by $W_Y$, and the salt weight by $S$, we resulting loaf weight will be given by: 
+$$
+\boxed{
+L = Y + F + W + S - e( W + W_Y)}
+$$
+where, from above, $W_Y = \frac{h_Y}{1+h_Y} Y$.
 """)
 
 st.divider()
