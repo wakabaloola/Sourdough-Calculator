@@ -37,7 +37,7 @@ def calculate_weight_after_evaporation(evaporated_water, flour, yeast, salt_need
     total_weight_before_evaporation = flour + yeast + salt_needed + water_needed
     return total_weight_before_evaporation - evaporated_water / 100 * (yeast_water + water_needed)
 
-st.markdown("According to the equations displayed below, the amount of water and salt required are given, respectively, by:")
+st.markdown("According to the equations displayed below, the amount of water, the salt required, and the resulting loaf weight (after taking into account the indicated assumed evaporation) are given, respectively, by:")
 
 water_needed = calculate_water(flour, hydration, yeast, yeast_hydration)
 st.markdown(f"### Water: **{water_needed:.0f} g**")
@@ -132,7 +132,7 @@ $$
 \boxed{
 L = Y + F + W + S - e( W + W_Y)}
 $$
-where, from above, $W_Y = \frac{h_Y}{1+h_Y} Y$.
+where, from above, $W_Y = h_YY/(1+h_Y)$.
 """)
 
 st.divider()
